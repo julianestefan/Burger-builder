@@ -71,6 +71,16 @@ export default class BurgerBuilder extends Component {
         })
     }
 
+    modalClosingHandler = () => {
+        this.setState({
+            purchasing: false
+        })
+    }
+
+    modalContinuinghandler() {
+        alert('You are continuing')
+    }
+
     render() {
         const disabledInfo = {
             ...this.state.ingredients
@@ -81,7 +91,10 @@ export default class BurgerBuilder extends Component {
 
         return (
             <>
-                <Modal show = {this.state.purchasing}>
+                <Modal 
+                    show = {this.state.purchasing}
+                    closing = {this.modalClosingHandler}
+                    continuing = {this.modalContinuinghandler}>
                     <OrderSummary ingredients = {this.state.ingredients}/>
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
