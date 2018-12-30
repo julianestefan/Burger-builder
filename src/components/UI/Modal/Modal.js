@@ -12,7 +12,7 @@ const modal = (props) => (
             className={styles.Modal}
             style={{
                 opacity: props.show ? '1' : '0',
-                transform: props.show ? 'translateY(0)' : 'translateY(-100vh)'
+                transform: props.show ? 'translateY(0)' : 'translateY(-450vh)'
             }}>
             {props.children}
             <Button
