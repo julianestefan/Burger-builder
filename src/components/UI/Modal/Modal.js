@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styles from './Modal.module.css'
-import Button from '../Button/Button'
 import Backdrop from '../Backdrop/Backdrop';
 
 
 class Modal extends Component {
 
     shouldComponentUpdate (nextProps, nextState) {
-        return nextProps.show !== this.props.show ;
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
     render() {
@@ -21,16 +20,6 @@ class Modal extends Component {
                         transform: this.props.show ? 'translateY(0)' : 'translateY(-450vh)'
                     }}>
                     {this.props.children}
-                    <Button
-                        clicked={this.props.closing}
-                        type="Danger">
-                        Cancel
-                    </Button>
-                    <Button
-                        clicked={this.props.continuing}
-                        type="Success">
-                        Continue
-                    </Button>
                 </div>
             </>
         );
