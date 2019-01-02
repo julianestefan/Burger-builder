@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Button from '../../UI/Button/Button';
 
-const orderSummary = (props) =>{
+const orderSummary = (props) => {
     const ingredientSummary = Object.keys(props.ingredients)
-        .map( igKey =>{
-            return <li key= {igKey}> <span style = {{textTransform: 'capitalize'}}>{igKey}</span> : {props.ingredients[igKey]} </li>
+        .map(igKey => {
+            return <li key={igKey}> <span style={{ textTransform: 'capitalize' }}>{igKey}</span> : {props.ingredients[igKey]} </li>
         })
 
-    return(
+    return (
         <>
             <h3> Your Order</h3>
             <p> A delicious burger with the following ingredients</p>
@@ -15,6 +16,16 @@ const orderSummary = (props) =>{
             </ul>
             <p> <strong> Total price: $ {props.price.toFixed(2)}</strong>  </p>
             <p> Continue to checkout? </p>
+            <Button
+                clicked={props.closing}
+                type="Danger">
+                Cancel
+                    </Button>
+            <Button
+                clicked={props.continuing}
+                type="Success">
+                Continue
+                    </Button>
         </>
     );
 }
