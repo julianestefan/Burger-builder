@@ -14,10 +14,10 @@ const orderSummary = (props) => {
             </div>
             <Button 
                 type = "Danger"
-                clicked> CANCEL</Button>
+                clicked = {props.onCheckoutCanceled}> CANCEL</Button>
             <Button 
                 type = "Success"
-                clicked> CONTINUE</Button>
+                clicked = {props.onCheckoutContinued}> CONTINUE</Button>
         </div>
     );
 }

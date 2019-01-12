@@ -21,7 +21,7 @@ class BurgerBuilder extends Component {
         totalPrice: 0,
         purchasable: false,
         purchasing: false,
-        loading: false, 
+        loading: false,
         error: false
     };
 
@@ -30,8 +30,8 @@ class BurgerBuilder extends Component {
             .then(response => {
                 this.setState({ ingredients: response.data })
             })
-            .catch( error => {
-                this.setState( {error: true})
+            .catch(error => {
+                this.setState({ error: true })
             });
     }
 
@@ -89,32 +89,44 @@ class BurgerBuilder extends Component {
 
     modalContinuinghandler = () => {
         // alert('You are continuing')
-        this.setState({ loading: true });
+        /* this.setState({ loading: true });
+ 
+         const data = {
+             ingredients: this.state.ingredients,
+             price: this.state.totalPrice,
+             customer: {
+                 name: 'Julian Estefan',
+                 address: {
+                     street: 'Cadaques 1123',
+                     zipCode: '7609',
+                     city: 'Santa Clara del Mar'
+                 },
+                 email: 'julian@gmail.com'
+             },
+             deliveryMethod: 'fastest'
+         };
+ 
+         axios.post('/orders.json', data)
+             .then(response => {
+                 console.log(response);
+                 this.setState({ loading: false });
+                 this.modalClosingHandler();
+             })
+             .catch(error => {
+                 this.setState({ loading: false });
+             });*/
+        
+        const queryParams = [];
 
-        const data = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Julian Estefan',
-                address: {
-                    street: 'Cadaques 1123',
-                    zipCode: '7609',
-                    city: 'Santa Clara del Mar'
-                },
-                email: 'julian@gmail.com'
-            },
-            deliveryMethod: 'fastest'
-        };
+        for (let i in this.state.ingredients){
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+        }
 
-        axios.post('/orders.json', data)
-            .then(response => {
-                console.log(response);
-                this.setState({ loading: false });
-                this.modalClosingHandler();
-            })
-            .catch(error => {
-                this.setState({ loading: false });
-            });
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
 
     render() {
