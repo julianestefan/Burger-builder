@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../../UI/Button/Button';
 import Burger from '../../Burger/Burger';
-import Styles from './OrderSummary.module.css';
+import Styles from './CheckoutSummary.module.css';
 
 const orderSummary = (props) => {
     return (
