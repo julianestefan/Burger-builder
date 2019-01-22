@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Order from '../../components/Order/order';
-import axios from '../../axios-orders';
+import axios from '../../shared/axios-orders';
 import withErrorHandler from '../../components/withErrorHandler/withErrorHandler';
 
 class Orders extends Component {
@@ -35,7 +35,7 @@ class Orders extends Component {
                         key = {order.id}
                         ingredients = {order.ingredients}
                         price = {+order.price} />
-               ) ) }
+               ))}
             </div>
         );
     }
