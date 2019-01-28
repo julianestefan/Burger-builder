@@ -5,7 +5,8 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from '../../shared/axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import withErrorHandler from '../../components/withErrorHandler/withErrorHandler';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -26,7 +27,7 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount() {
-        axios.get('https://burger-builder-efa3a.firebaseio.com/ingredients.json')
+        axios.get('ingredients.json')
             .then(response => {
                 this.setState({ ingredients: response.data })
             })
@@ -89,10 +90,10 @@ class BurgerBuilder extends Component {
 
     modalContinuinghandler = () => {
         const queryParams = [];
-        for (let i in this.state.ingredients){
+        for (let i in this.state.ingredients) {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
-        queryParams.push('price=' + encodeURIComponent(this.state.totalPrice) );
+        queryParams.push('price=' + encodeURIComponent(this.state.totalPrice));
 
         const queryString = queryParams.join('&');
         this.props.history.push({

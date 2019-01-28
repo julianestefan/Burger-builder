@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Modal from '../UI/Modal/Modal';
+import Modal from '../../components/UI/Modal/Modal';
 
 const withErrorHandler = (WrapperComponent, axios) => {
     return class extends Component{
@@ -9,11 +9,11 @@ const withErrorHandler = (WrapperComponent, axios) => {
         }
     
         componentWillMount() {
-           this.requestInterceptor =  axios.interceptors.request.use(req => {
+           this.requestInterceptor =  axios.interceptors.request.use(request => {
                 this.setState( { error: null } ); 
-                return req;
+                return request;
             }); 
-            this.responseInterceptor = axios.interceptors.response.use( res => res,  error => {
+            this.responseInterceptor = axios.interceptors.response.use( response => response,  error => {
                 this.setState( { error: error } ); 
             });
         }

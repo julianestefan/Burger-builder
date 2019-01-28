@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Order from '../../components/Order/order';
 import axios from '../../shared/axios-orders';
-import withErrorHandler from '../../components/withErrorHandler/withErrorHandler';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Orders extends Component {
 
