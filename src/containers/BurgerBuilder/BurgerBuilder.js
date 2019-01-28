@@ -20,15 +20,9 @@ class BurgerBuilder extends Component {
         error: false
     };
 
-/*     componentDidMount() {
-        axios.get('ingredients.json')
-            .then(response => {
-                this.setState({ ingredients: response.data })
-            })
-            .catch(error => {
-                this.setState({ error: true })
-            });
-    } */
+    componentDidMount() {
+        this.props.onIngredientsInit();
+    } 
 
     purchasingHandler = () => {
         this.setState({
@@ -82,10 +76,10 @@ class BurgerBuilder extends Component {
                 />
             </>;
             orderSummary = <OrderSummary
-                price={this.props.totalPrice}
-                ingredients={this.props.ingredients}
-                continuing={this.modalContinuinghandler}
-                closing={this.modalClosingHandler} />;
+                price = {this.props.totalPrice}
+                ingredients = {this.props.ingredients}
+                continuing = {this.modalContinuinghandler}
+                closing = {this.modalClosingHandler} />;
         }
 
         if (this.state.loading) {
@@ -95,9 +89,9 @@ class BurgerBuilder extends Component {
         return (
             <>
                 <Modal
-                    show={this.state.purchasing}
-                    closing={this.modalClosingHandler}
-                    continuing={this.modalContinuinghandler}>
+                    show = {this.state.purchasing}
+                    closing = {this.modalClosingHandler}
+                    continuing = {this.modalContinuinghandler}>
                     {orderSummary}
                 </Modal>
                 {burger}
@@ -116,7 +110,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (name) => dispatch( actions.addIngredient(name) ),
-        onIngredientRemoved: (name) => dispatch( actions.removeIngredient(name) )
+        onIngredientRemoved: (name) => dispatch( actions.removeIngredient(name) ),
+        onIngredientsInit: () => dispatch( actions.initIngredients() )
     }
 }
 
