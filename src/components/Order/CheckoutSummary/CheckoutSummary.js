@@ -3,7 +3,7 @@ import Button from '../../UI/Button/Button';
 import Burger from '../../Burger/Burger';
 import Styles from './CheckoutSummary.module.css';
 
-const orderSummary = (props) => {
+const checkoutSummary = (props) => {
     return (
         <div className = {Styles.CheckoutSummary}>
             <h1>
@@ -22,4 +22,4 @@ const orderSummary = (props) => {
     );
 }
 
-export default orderSummary;
+export default checkoutSummary;
