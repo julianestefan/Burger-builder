@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import axios from '../../../shared/axios-orders';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-import * as Actions from '../../../Store/Actions/index';
+import * as Actions from '../../../store/Actions/index';
 
 import Styles from './ContactData.module.css';
 import Input from '../../../components/UI/Input/Input';
@@ -48,7 +48,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 5,
+                    minLength: 4,
                     maxLength: 5,
                     isNumeric: true
                 },
@@ -106,7 +106,7 @@ class ContactData extends Component {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
         }
         const order = {
-            ingredients: this.props.ings,
+            ingredients: this.props.ingredients,
             price: this.props.price,
             orderData: formData
         }

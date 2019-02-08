@@ -10,3 +10,6 @@ export {
     fetchOrders,
     purchaseInit
 } from './orders';
+export {
+    onAuthenticationHandler
+} from './auth'

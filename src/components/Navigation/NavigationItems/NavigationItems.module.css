@@ -4,12 +4,22 @@
     list-style: none;
     display: flex;
     flex-flow: column;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
 }
 
+.NavigationItems .ConnectButton {
+    margin-top: 60%; 
+}
+
 @media (min-width: 500px) {
+    .NavigationItems .ConnectButton {
+        margin-top: 0; 
+    }
+
     .NavigationItems {
+        align-items: center;
         flex-flow: row;
     }
 }
+

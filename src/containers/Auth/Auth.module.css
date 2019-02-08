@@ -1,0 +1,36 @@
+.AuthModal{
+    padding: 15px;
+}
+
+.AuthModal input{
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    height: 30px;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.AuthModal .Logo{
+    height: 100px;
+    margin: 0 auto;
+    width: 150px;
+}
+
+.AuthModal button {
+    width: 45%;
+}
+
+.AuthModal p {
+    text-align: center;
+}
+
+.Switch:hover{
+    color: green;
+    font-weight: 700;
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: center;
+}
