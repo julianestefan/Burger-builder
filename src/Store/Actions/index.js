@@ -14,5 +14,6 @@ export {
     onAuthenticationHandler,
     auth,
     logout,
-    setAuthRedirectPath
+    setAuthRedirectPath,
+    authCheckState
 } from './auth'

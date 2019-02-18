@@ -16,12 +16,15 @@ const navigationItems = (props) => {
 
     const onLogoutHandler = () => {
         props.onLogout();
+        if (props.closeSideDrawer)  props.closeSideDrawer();
     }
 
     return (
         <ul className={styles.NavigationItems}>
-            <NavigationItem link="/" exact >Burger Builder</NavigationItem>
-            {props.isAuth ? <NavigationItem link="/orders">Orders</NavigationItem>: null} 
+            <li onClick = {props.closeSideDrawer} >
+            <NavigationItem  link="/" exact >Burger Builder</NavigationItem>
+            </li> 
+            {props.isAuth ? <li onClick = {props.closeSideDrawer}> <NavigationItem link="/orders" onClick= {props.closeSideDrawer} >Orders</NavigationItem> </li> : null} 
             {props.isAuth ? (
                 <li className={styles.ConnectButton} >
                     <Button

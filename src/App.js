@@ -1,12 +1,19 @@
 import React, { Component, Suspense } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import Layout from './containers/Layput/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Spinner from './components/UI/Spinner/Spinner';
 import Auth from './containers/Auth/Auth';
 
+import * as actions from './store/Actions/index';
+
 class App extends Component {
+  componentWillMount() {
+    this.props.onCheckAuthState();
+  }
+
   render() {
     return (
       <div>
@@ -23,4 +30,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onCheckAuthState: () => dispatch(actions.authCheckState())
+  };
+}; 
+
+export default withRouter(connect(null, mapDispatchToProps)(App)) ;
