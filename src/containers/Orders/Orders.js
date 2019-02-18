@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux';
 
 import Order from '../../components/Order/order';
@@ -25,8 +24,6 @@ class Orders extends Component {
                     price={order.price} />
             ) )
         }
-
-        if (!this.props.token) orders = <Redirect to='/' />
 
         return (
             <div>

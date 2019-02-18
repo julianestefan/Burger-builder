@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
-import { Route, withRouter } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Route, withRouter, Redirect, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Layout from './containers/Layput/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
@@ -15,13 +15,26 @@ class App extends Component {
   }
 
   render() {
+
+    const routes = [
+      <Route path='/' exact component={BurgerBuilder} />
+    ];
+
+    const authRoutes = [
+      <Route path='/checkout' component={React.lazy(() => import('./containers/Checkout/Checkout'))} />,
+      <Route path='/orders' component={React.lazy(() => import('./containers/Orders/Orders'))} />
+    ]
+
+    if (this.props.isAuth) routes.push(authRoutes);
+
     return (
       <div>
         <Layout>
-          <Route path='/' exact component={BurgerBuilder} />
           <Suspense fallback={<Spinner />}>
-            <Route path='/checkout' component={React.lazy(() => import('./containers/Checkout/Checkout'))} />
-            <Route path='/orders' component={React.lazy(() => import('./containers/Orders/Orders'))} />
+            <Switch>
+              {routes}
+              <Redirect to="/" />
+            </Switch>
           </Suspense>
           <Auth />
         </Layout>
@@ -30,10 +43,16 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isAuth: state.auth.token !== null
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onCheckAuthState: () => dispatch(actions.authCheckState())
   };
-}; 
+};
 
-export default withRouter(connect(null, mapDispatchToProps)(App)) ;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
