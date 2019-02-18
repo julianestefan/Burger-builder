@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux';
 
 import Order from '../../components/Order/order';
@@ -11,7 +12,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 class Orders extends Component {
 
     componentDidMount () {
-        this.props.onFetchOrders();
+        this.props.onFetchOrders(this.props.token);
     }
 
     render() {
@@ -24,6 +25,9 @@ class Orders extends Component {
                     price={order.price} />
             ) )
         }
+
+        if (!this.props.token) orders = <Redirect to='/' />
+
         return (
             <div>
                 {orders}
@@ -35,13 +39,14 @@ class Orders extends Component {
 const mapStateToProps = state => {
     return {
         orders: state.orders.orders,
-        loading: state.orders.loading
+        loading: state.orders.loading,
+        token: state.auth.token
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () => dispatch( Actions.fetchOrders() )
+        onFetchOrders: (token) => dispatch( Actions.fetchOrders(token) )
     };
 }
 

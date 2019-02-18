@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -22,6 +23,10 @@ class BurgerBuilder extends Component {
         this.props.onIngredientsInit();
     }
 
+    componentWillUnmount() {
+        this.props.onSetAuthRedirectPath(null);
+    }
+
     purchasingHandler = () => {
         this.setState({ purchasing: true });
     }
@@ -41,6 +46,10 @@ class BurgerBuilder extends Component {
         return disabledInfo;
     }
 
+    buidControlsAuthHandler = () => {
+       this.props.onAuthHandler(); 
+    }
+
     render() {
 
         let orderSummary = null;
@@ -48,6 +57,7 @@ class BurgerBuilder extends Component {
 
         if (this.props.ingredients) {
             burger = <>
+                {this.props.redirectPath && this.props.isAuth ? <Redirect to={this.props.redirectPath} /> : null  }
                 <Burger ingredients={this.props.ingredients} />
                 <BuildControls
                     ingredientAdded={this.props.onIngredientAdded}
@@ -56,6 +66,9 @@ class BurgerBuilder extends Component {
                     price={this.props.totalPrice}
                     purchasable={this.props.totalPrice > 0}
                     ordered={this.purchasingHandler}
+                    isAuth={this.props.isAuth}
+                    onAuthHandler= {this.props.onAuthHandler}
+                    onSetAuthRedirectPath={this.props.onSetAuthRedirectPath}
                 />
             </>;
             orderSummary = <OrderSummary
@@ -64,6 +77,7 @@ class BurgerBuilder extends Component {
                 continuing={this.modalContinuinghandler}
                 closing={this.modalClosingHandler} />;
         }
+
 
         return (
             <>
@@ -83,7 +97,9 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         totalPrice: state.burgerBuilder.totalPrice,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuth: state.auth.token !== null,
+        redirectPath: state.auth.authRedirectPath
     };
 }
 
@@ -92,7 +108,9 @@ const mapDispatchToProps = dispatch => {
         onIngredientAdded: (name) => dispatch(actions.addIngredient(name)),
         onIngredientRemoved: (name) => dispatch(actions.removeIngredient(name)),
         onIngredientsInit: () => dispatch(actions.initIngredients()),
-        onInitPurchase: () => dispatch(actions.purchaseInit())
+        onInitPurchase: () => dispatch(actions.purchaseInit()),
+        onAuthHandler: () => dispatch(actions.onAuthenticationHandler()),
+        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     }
 }
 

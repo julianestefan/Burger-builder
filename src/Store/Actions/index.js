@@ -11,5 +11,8 @@ export {
     purchaseInit
 } from './orders';
 export {
-    onAuthenticationHandler
+    onAuthenticationHandler,
+    auth,
+    logout,
+    setAuthRedirectPath
 } from './auth'

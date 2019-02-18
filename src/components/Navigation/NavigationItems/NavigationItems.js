@@ -14,20 +14,48 @@ const navigationItems = (props) => {
         props.onAuthenticationHandler();
     }
 
+    const onLogoutHandler = () => {
+        props.onLogout();
+    }
+
     return (
         <ul className={styles.NavigationItems}>
             <NavigationItem link="/" exact >Burger Builder</NavigationItem>
-            <NavigationItem link="/orders">Orders</NavigationItem>
-            <li className = {styles.ConnectButton} > <Button clicked = { openAuthtentication  } type="Login" > Connect </Button></li> 
+            {props.isAuth ? <NavigationItem link="/orders">Orders</NavigationItem>: null} 
+            {props.isAuth ? (
+                <li className={styles.ConnectButton} >
+                    <Button
+                        clicked={onLogoutHandler}
+                        type="Danger" >
+                        Logout
+                    </Button>
+                </li>
+            ) : (
+                    <li className={styles.ConnectButton} >
+                        <Button
+                            clicked={openAuthtentication}
+                            type="Login" >
+                            Connect
+                    </Button>
+                    </li>
+                )}
         </ul>
     );
-    
+
 };
 
-const mapDispatchToProps = (dispatch) => {
+
+const mapStateToProps = state => {
     return {
-        onAuthenticationHandler: () => dispatch(actions.onAuthenticationHandler())
+        isAuth: state.auth.token !== null
     };
 }
 
-export default connect(null, mapDispatchToProps)(navigationItems);
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuthenticationHandler: () => dispatch(actions.onAuthenticationHandler()),
+        onLogout: () => dispatch(actions.logout())
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(navigationItems);
