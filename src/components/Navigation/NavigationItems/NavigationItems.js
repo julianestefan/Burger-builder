@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import styles from './NavigationItems.module.css';
@@ -15,17 +16,15 @@ const navigationItems = (props) => {
     }
 
     const onLogoutHandler = () => {
+        if (props.closeSideDrawer) props.closeSideDrawer();
         props.onLogout();
-        if (props.closeSideDrawer)  props.closeSideDrawer();
     }
 
     return (
         <ul className={styles.NavigationItems}>
-            <li onClick = {props.closeSideDrawer} >
-            <NavigationItem  link="/" exact >Burger Builder</NavigationItem>
-            </li> 
-            {props.isAuth ? <li onClick = {props.closeSideDrawer}> <NavigationItem link="/orders" onClick= {props.closeSideDrawer} >Orders</NavigationItem> </li> : null} 
-            {props.isAuth ? (
+            <NavigationItem link="/" exact >Burger Builder</NavigationItem>
+            {props.isAuth ? <NavigationItem link="/orders" >Orders</NavigationItem> : null}
+            {props.isAuth ?
                 <li className={styles.ConnectButton} >
                     <Button
                         clicked={onLogoutHandler}
@@ -33,15 +32,15 @@ const navigationItems = (props) => {
                         Logout
                     </Button>
                 </li>
-            ) : (
-                    <li className={styles.ConnectButton} >
-                        <Button
-                            clicked={openAuthtentication}
-                            type="Login" >
-                            Connect
-                    </Button>
-                    </li>
-                )}
+                :
+                <li className={styles.ConnectButton} >
+                    <Button
+                        clicked={openAuthtentication}
+                        type="Login" >
+                        Connect
+                        </Button>
+                </li>
+            }
         </ul>
     );
 
@@ -61,4 +60,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(navigationItems);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(navigationItems));
